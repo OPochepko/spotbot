@@ -38,7 +38,6 @@ class SpotBotRestControllerTest {
         mockMvc.perform(get("/api/spotmessages/{location}", "Rome"))
                 .andDo(print()).andExpect(status().isOk())
                 .andExpect(content().string(containsString("{\"location\":\"Rome\",\"message\":\"Visit Colloseum\"}")));
-
     }
 
     @Test
@@ -48,11 +47,10 @@ class SpotBotRestControllerTest {
         SpotMessageDto spotMessage = new SpotMessageDto("Rome", "Visit Colloseum");
         when(spotMessageService.createSpotMessage(spotMessage)).thenReturn(spotMessage);
         //when-then
-        mockMvc.perform(post("/api/spotmessages").contentType(MediaType.APPLICATION_JSON).content("{\"location\":\"Rome\",\"message\":\"Visit Colloseum\"}"))
+        mockMvc.perform(post("/api/spotmessages").contentType(MediaType.APPLICATION_JSON)
+                .content("{\"location\":\"Rome\",\"message\":\"Visit Colloseum\"}"))
                 .andDo(print()).andExpect(status().is2xxSuccessful())
                 .andExpect(content().string(containsString("{\"location\":\"Rome\",\"message\":\"Visit Colloseum\"}")));
-
-
     }
 
     @Test
@@ -61,17 +59,16 @@ class SpotBotRestControllerTest {
         //given
         SpotMessageDto spotMessage = new SpotMessageDto("Rome", "Visit Colloseum");
         //when-then
-        mockMvc.perform(put("/api/spotmessages").contentType(MediaType.APPLICATION_JSON).content("{\"location\":\"Rome\",\"message\":\"Visit Colloseum\"}"))
+        mockMvc.perform(put("/api/spotmessages").contentType(MediaType.APPLICATION_JSON)
+                .content("{\"location\":\"Rome\",\"message\":\"Visit Colloseum\"}"))
                 .andDo(print()).andExpect(status().is2xxSuccessful());
-
-
     }
 
     @Test
     @WithMockUser(username = "user", password = "pswd", authorities = "USER")
     void deleteSpotMessage_shouldReturnStatusOk() throws Exception {
-        mockMvc.perform(delete("/api/spotmessages").contentType(MediaType.APPLICATION_JSON).content("{\"location\":\"Rome\",\"message\":\"Visit Colloseum\"}"))
+        mockMvc.perform(delete("/api/spotmessages").contentType(MediaType.APPLICATION_JSON)
+                .content("{\"location\":\"Rome\",\"message\":\"Visit Colloseum\"}"))
                 .andDo(print()).andExpect(status().is2xxSuccessful());
-
     }
 }
