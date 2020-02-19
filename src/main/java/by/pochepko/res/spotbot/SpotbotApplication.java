@@ -19,7 +19,6 @@ public class SpotbotApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(SpotbotApplication.class, args);
-
     }
 
     @PostConstruct

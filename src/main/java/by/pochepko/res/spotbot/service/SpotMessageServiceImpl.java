@@ -52,9 +52,14 @@ public class SpotMessageServiceImpl implements SpotMessageService {
 
     @Override
     public List<SpotMessageDto> getSpotMessageList(int offset, int limit) {
-        return repository.findAll(PageRequest.of((int) Math.ceil((double) offset / limit), limit, Sort.by("location"))).stream()
+
+        return repository.findAll(PageRequest.of(getCurrentPage(offset, limit), limit, Sort.by("location"))).stream()
                 .map(mapper::modelToDto)
                 .collect(Collectors.toList());
+    }
+
+    private int getCurrentPage(int offset, int limit) {
+        return (int) Math.ceil((double) offset / limit);
     }
 
 }
