@@ -1,0 +1,1 @@
+insert into spot_messages (location, message) values ('Москва','Не забудьте посетить Красную Площадь. Ну а в ЦУМ можно и не заходить)))');

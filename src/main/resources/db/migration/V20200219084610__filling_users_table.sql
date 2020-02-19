@@ -1,0 +1,1 @@
+insert into users (username, password, role) values ('user','$2a$10$aVu7O5K6AMIqRPRx4xxjxO79w9.Qv4McDK8VWcoxnQVwYyujEKMs2','USER')

@@ -1,0 +1,1 @@
+insert into spot_messages (location, message) values ('Rome','Visit Colloseum');
