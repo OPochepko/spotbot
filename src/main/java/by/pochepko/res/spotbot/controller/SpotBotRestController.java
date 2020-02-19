@@ -30,7 +30,7 @@ public class SpotBotRestController {
         return spotMessageService.createSpotMessage(spotMessageDto);
     }
 
-    @PutMapping(value = "/spotmessages")
+    @PutMapping(value = "/spotmessages", consumes = "application/json")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAnyAuthority('USER')")
 
@@ -38,7 +38,7 @@ public class SpotBotRestController {
         spotMessageService.updateSpotMessage(spotMessageDto);
     }
 
-    @DeleteMapping(value = "/spotmessages")
+    @DeleteMapping(value = "/spotmessages", consumes = "application/json")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAnyAuthority('USER')")
     void deleteSpotMessage(@Valid @RequestBody SpotMessageDto spotMessageDto) {
@@ -46,6 +46,7 @@ public class SpotBotRestController {
     }
 
     @GetMapping(value = "/spotmessages")
+    @ResponseStatus(value = HttpStatus.OK)
     @PreAuthorize("hasAnyAuthority('USER')")
     public List<SpotMessageDto> getSpotMessage(@RequestParam int offset, @RequestParam int limit) {
         return spotMessageService.getSpotMessageList(offset, limit);
