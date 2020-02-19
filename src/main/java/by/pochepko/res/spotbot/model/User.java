@@ -1,14 +1,13 @@
 package by.pochepko.res.spotbot.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.google.common.base.Objects;
 
 import javax.persistence.*;
-import javax.validation.constraints.Email;
 
 @Entity
 @Table(name = "users")
 public class User {
+
     public User() {
     }
 
@@ -21,10 +20,8 @@ public class User {
     @Enumerated(EnumType.STRING)
     private Role role;
 
-    @Email
     private String username;
 
-    @JsonIgnore
     private String password;
 
     public long getId() {

@@ -5,23 +5,24 @@ import by.pochepko.res.spotbot.mapper.SpotMessageDtoMapper;
 import by.pochepko.res.spotbot.model.SpotMessage;
 import by.pochepko.res.spotbot.repository.SpotMessageRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Component;
+import org.springframework.context.MessageSource;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.Collectors;
-import java.util.stream.StreamSupport;
 
 @Transactional
-@Component
+@Service
 public class SpotMessageServiceImpl implements SpotMessageService {
 
-    private String message = "Unknown location";
+    @Autowired
+    MessageSource messageSource;
 
-    private SpotMessageDto unknownLocationSpotMessage = new SpotMessageDto(message);
     @Autowired
     private SpotMessageDtoMapper mapper;
 
@@ -31,7 +32,7 @@ public class SpotMessageServiceImpl implements SpotMessageService {
     @Override
     public SpotMessageDto getSpotMessage(String location) {
         Optional<SpotMessage> spotMessage = repository.findSpotMessageByLocation(location);
-        return spotMessage.isEmpty() ? unknownLocationSpotMessage : mapper.modelToDto(spotMessage.get());
+        return spotMessage.isEmpty() ? new SpotMessageDto(location, messageSource.getMessage("text.unknownLocation", null, Locale.getDefault())) : mapper.modelToDto(spotMessage.get());
     }
 
     @Override
@@ -50,9 +51,10 @@ public class SpotMessageServiceImpl implements SpotMessageService {
     }
 
     @Override
-    public List<SpotMessageDto> getSpotMessageList() {
-        return StreamSupport.stream(repository.findAll().spliterator(), true)
+    public List<SpotMessageDto> getSpotMessageList(int offset, int limit) {
+        return repository.findAll(PageRequest.of((int) Math.ceil((double) offset / limit), limit, Sort.by("location"))).stream()
                 .map(mapper::modelToDto)
                 .collect(Collectors.toList());
     }
+
 }

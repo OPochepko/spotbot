@@ -8,11 +8,11 @@
         <version>2.2.4.RELEASE</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
-    <groupId>by.pochepko.res.spotbot</groupId>
+    <groupId>by.pochepko.res</groupId>
     <artifactId>spotbot</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>spotbot</name>
-    <description>Demo project for Spring Boot</description>
+    <description>SpotBot project</description>
 
     <properties>
         <java.version>1.8</java.version>

@@ -3,19 +3,25 @@ package by.pochepko.res.spotbot.dto;
 
 import com.google.common.base.Objects;
 
+import javax.validation.constraints.NotNull;
+
 public class SpotMessageDto {
-    public SpotMessageDto(String message){
+    @NotNull
+    private String location;
+    @NotNull
+    private String message;
+
+    public SpotMessageDto(String message) {
         this.message = message;
     }
-    public SpotMessageDto(String location, String message){
+
+    public SpotMessageDto(String location, String message) {
         this.location = location;
         this.message = message;
     }
-    public SpotMessageDto(){};
 
-    private String location;
-
-    private String message;
+    public SpotMessageDto() {
+    }
 
     public String getLocation() {
         return location;

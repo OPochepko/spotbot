@@ -4,6 +4,7 @@ package by.pochepko.res.spotbot.model;
 import com.google.common.base.Objects;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "spot_messages")
@@ -12,9 +13,9 @@ public class SpotMessage {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
-
+    @NotNull
     private String location;
-
+    @NotNull
     private String message;
 
     public long getId() {
