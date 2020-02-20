@@ -1,6 +1,7 @@
 package by.pochepko.res.spotbot.service;
 
 import by.pochepko.res.spotbot.dto.SpotMessageDto;
+import by.pochepko.res.spotbot.dto.UpdatedSpotMessageDto;
 import by.pochepko.res.spotbot.mapper.SpotMessageDtoMapper;
 import by.pochepko.res.spotbot.model.SpotMessage;
 import by.pochepko.res.spotbot.repository.SpotMessageRepository;
@@ -41,13 +42,14 @@ public class SpotMessageServiceImpl implements SpotMessageService {
     }
 
     @Override
-    public void updateSpotMessage(SpotMessageDto spotMessageDto) {
-        repository.save(mapper.dtoToModel(spotMessageDto));
+    public void updateSpotMessage(String location, UpdatedSpotMessageDto updatedSpotMessageDto) {
+        SpotMessage message = repository.findSpotMessageByLocation(location).get();
+        message.setMessage(updatedSpotMessageDto.getMessage());
     }
 
     @Override
-    public void deleteSpotMessage(SpotMessageDto spotMessageDto) {
-        repository.delete(mapper.dtoToModel(spotMessageDto));
+    public void deleteSpotMessage(String location) {
+        repository.deleteByLocation(location);
     }
 
     @Override
@@ -59,7 +61,7 @@ public class SpotMessageServiceImpl implements SpotMessageService {
     }
 
     private int getCurrentPage(int offset, int limit) {
-        return (int) Math.ceil((double) offset / limit);
+        return (int) Math.floor((double) offset / limit);
     }
 
 }

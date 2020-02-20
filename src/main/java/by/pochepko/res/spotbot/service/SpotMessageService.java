@@ -1,6 +1,7 @@
 package by.pochepko.res.spotbot.service;
 
 import by.pochepko.res.spotbot.dto.SpotMessageDto;
+import by.pochepko.res.spotbot.dto.UpdatedSpotMessageDto;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,9 +13,9 @@ public interface SpotMessageService {
 
     SpotMessageDto createSpotMessage(SpotMessageDto spotMessageDto);
 
-    void updateSpotMessage(SpotMessageDto spotMessageDto);
+    void updateSpotMessage(String location, UpdatedSpotMessageDto updatedSpotMessageDto);
 
-    void deleteSpotMessage(SpotMessageDto spotMessageDto);
+    void deleteSpotMessage(String location);
 
     List<SpotMessageDto> getSpotMessageList(int offset, int limit);
 

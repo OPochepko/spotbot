@@ -9,4 +9,7 @@ import java.util.Optional;
 @Repository
 public interface SpotMessageRepository extends PagingAndSortingRepository<SpotMessage, Long> {
     Optional<SpotMessage> findSpotMessageByLocation(String location);
+
+    void deleteByLocation(String location);
+
 }

@@ -11,10 +11,6 @@ public class SpotMessageDto {
     @NotNull
     private String message;
 
-    public SpotMessageDto(String message) {
-        this.message = message;
-    }
-
     public SpotMessageDto(String location, String message) {
         this.location = location;
         this.message = message;

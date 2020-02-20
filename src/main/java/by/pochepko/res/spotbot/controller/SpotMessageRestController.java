@@ -1,6 +1,7 @@
 package by.pochepko.res.spotbot.controller;
 
 import by.pochepko.res.spotbot.dto.SpotMessageDto;
+import by.pochepko.res.spotbot.dto.UpdatedSpotMessageDto;
 import by.pochepko.res.spotbot.service.SpotMessageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -12,12 +13,13 @@ import java.util.List;
 
 @RestController
 @RequestMapping(value = "/api")
-public class SpotBotRestController {
+public class SpotMessageRestController {
 
     @Autowired
     private SpotMessageService spotMessageService;
 
-    @GetMapping(value = "/spotmessages/{location}")
+    @ResponseStatus(value = HttpStatus.OK)
+    @GetMapping(value = "/spotmessages/{location}", produces = "application/json")
     @PreAuthorize("hasAnyAuthority('USER')")
     public SpotMessageDto getSpotMessage(@Valid @PathVariable String location) {
         return spotMessageService.getSpotMessage(location);
@@ -30,22 +32,21 @@ public class SpotBotRestController {
         return spotMessageService.createSpotMessage(spotMessageDto);
     }
 
-    @PutMapping(value = "/spotmessages", consumes = "application/json")
+    @PutMapping(value = "/spotmessages/{location}", consumes = "application/json")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAnyAuthority('USER')")
-
-    public void updateSpotMessage(@Valid @RequestBody SpotMessageDto spotMessageDto) {
-        spotMessageService.updateSpotMessage(spotMessageDto);
+    public void updateSpotMessage(@Valid @RequestBody UpdatedSpotMessageDto updatedSpotMessageDto, @PathVariable String location) {
+        spotMessageService.updateSpotMessage(location, updatedSpotMessageDto);
     }
 
-    @DeleteMapping(value = "/spotmessages", consumes = "application/json")
+    @DeleteMapping(value = "/spotmessages/{location}")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @PreAuthorize("hasAnyAuthority('USER')")
-    void deleteSpotMessage(@Valid @RequestBody SpotMessageDto spotMessageDto) {
-        spotMessageService.deleteSpotMessage(spotMessageDto);
+    void deleteSpotMessage(@PathVariable String location) {
+        spotMessageService.deleteSpotMessage(location);
     }
 
-    @GetMapping(value = "/spotmessages")
+    @GetMapping(value = "/spotmessages", produces = "application/json")
     @ResponseStatus(value = HttpStatus.OK)
     @PreAuthorize("hasAnyAuthority('USER')")
     public List<SpotMessageDto> getSpotMessage(@RequestParam int offset, @RequestParam int limit) {
